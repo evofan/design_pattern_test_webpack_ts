@@ -118,7 +118,7 @@ class MainAdapter {
         pb.PrintBanner("ノートPCを接続");
         pb.printWeak();
         pb.printStrong();
-        console.log("呼び出し元(メインクラス)からは、Bannerクラスの存在は見えないようになっている");
+        console.log("継承（クラス）例：呼び出し元(メインクラス)からは、Bannerクラスの存在は見えないようになっている\n");
     }
 }
 
@@ -127,3 +127,53 @@ let m = new MainAdapter();
 m.main();
 
 // ■2■ 委譲（譲り渡す）を使ったもの
+
+/**
+ * Pintクラス
+ */
+class Print {
+    public printWeak(): void { }
+    public printStrong(): void { }
+}
+
+/**
+ * PrintBannerクラス
+ */
+class PrintBanner2 extends Print {
+    constructor() {
+        super();
+    }
+
+    public banner: any = null;
+
+    public PrintBanner2(e: string) {
+        this.banner = new Banner();
+        this.banner.Banner(e);
+    }
+
+    public printWeak(): void {
+        this.banner.showWithParen();
+    }
+
+    public printStrong(): void {
+        this.banner.showWithAster();
+    }
+
+}
+
+class MainAdapter2 {
+    constructor() { }
+    main() {
+        let pb = new PrintBanner2();
+        pb.PrintBanner2("ノートPCを接続");
+        pb.printWeak();
+        pb.printStrong();
+        console.log("委譲（インスタンス）例");
+    }
+}
+
+// 確認
+let m2 = new MainAdapter2();
+m2.main();
+
+
