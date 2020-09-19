@@ -177,3 +177,128 @@ let m2 = new MainAdapter2();
 m2.main();
 
 
+console.log("■3■ Templateパターン、スーパークラスで処理の枠組を決め、サブクラスで具体的な内容を定義する\n");
+
+// ★実態のない抽象メソッド（親クラス）がテンプレートメソッド
+// ★抽象クラス＝Abstract Class
+// ★具象クラス＝Concreate Class
+//
+// メリット：
+// ①ロジックが共通化出来る＝サブクラスが同じようなロジックの場合、後での修正も1箇所で済む
+//
+// 用語
+// スーパークラスの変数にサブクラスのインスタンスのどれを代入しても正しく動作するようにする＝The Liskov Substitution Principle（LSP）
+// →instanceofで型を調べたりする必要がないように
+//
+// サブクラスは
+// ・スーパークラスで定義されているメソッドが利用出来る
+// ・サブクラスに少しメソッドを書くだけで機能を追加出来る
+// ・サブクラスでメソッドをオーバーライドすれば機能を変更出来る
+// を期待
+//
+// スーパークラスは
+// ・サブクラスがその（抽象）メソッドを実装する事を期待する
+// ・サブクラスに対して、そのメソッドの実装を要請する（↑と同じ？）
+// →subclass responsibility（サブラクスの責任）
+
+class AbstractDisplay {
+    public open() {
+        // サブクラスに実装を任せる抽象メソッド
+    }
+
+    public print() {
+        // サブクラスに実装を任せる抽象メソッド
+    }
+
+    public close() {
+        // サブクラスに実装を任せる抽象メソッド
+    }
+
+    public display() {
+        this.open();
+        for (let i = 1; i <= 5; i++) {
+            this.print();
+        }
+        this.close();
+    }
+
+}
+
+class CharaDisplay extends AbstractDisplay {
+    constructor() {
+        super();
+    }
+    private ch: string = "";
+    public CharaDisplay(e: string) {
+        this.ch = e;
+    }
+
+    public open() {
+        console.log("<<");
+    }
+
+    public print() {
+        console.log(this.ch);
+    }
+    public close() {
+        console.log(">>");
+    }
+
+}
+
+class StringDisplay extends AbstractDisplay {
+    constructor() {
+        super();
+    }
+    private ch: string = "";
+    private leng: number = 0;
+    public StringDisplay(e: string) {
+        this.ch = e;
+        this.leng = this.ch.length;
+        console.log("this.leng: " + this.leng);
+    }
+
+    public open() {
+        this.printLine();
+    }
+
+    public print() {
+        console.log("+" + this.ch + "+");
+    }
+    public close() {
+        this.printLine();
+    }
+
+    private printLine() {
+        let temp: string = "";
+        temp += "+";
+        for (let i: number = 0; i < this.leng; i++) {
+            temp += "-";
+        }
+        temp += "+";
+        console.log(temp);
+    }
+
+}
+
+class MainTemplate {
+    public MainTemplate(e: string) {
+        console.log(e);
+        let d1 = new CharaDisplay();
+        d1.CharaDisplay("A");
+        let d2 = new StringDisplay();
+        d2.StringDisplay(e);
+        d1.display();
+        d2.display();
+    }
+}
+
+// 確認
+let m3 = new MainTemplate();
+m3.MainTemplate("ABCDE");
+
+
+
+
+
+console.log("■ 4 ■ Facory Methodパターン、スーパークラスでインスタンス生成の枠組を決め、サブクラスで実際の具体的な内容を定義する");
