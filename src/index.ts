@@ -301,4 +301,84 @@ m3.MainTemplate("ABCDE");
 
 
 
-console.log("■ 4 ■ Facory Methodパターン、スーパークラスでインスタンス生成の枠組を決め、サブクラスで実際の具体的な内容を定義する");
+console.log("\n■ 4 ■ Facory Methodパターン、スーパークラスでインスタンス生成の枠組を決め、サブクラスで実際の具体的な内容を定義する");
+
+
+// Facotry
+class Product {
+
+    public use() { };
+
+}
+
+class Factory {
+    public create(owner: string) {
+        let p = this.createProduct(owner);
+        this.registerProduct(p);
+    }
+    public createProduct(e: string) { };
+    public registerProduct(e: any) { };
+
+}
+
+// IDcard
+class IDcard extends Product {
+    private owner: string = "";
+    public IDcard(e: string) {
+        console.log("IDcard() " + e);
+        console.log(e + "のカ－ドを作ります。");
+        this.owner = e;
+    }
+    public use() {
+        console.log(this.owner + "のカ－ドを使います。");
+    }
+
+    public getOwner() {
+        return this.owner;
+    }
+
+}
+
+const owners: any[] = [];
+
+class IDfactory extends Factory {
+
+    // public owners: any[] = [];
+
+    public createProduct(e: string) {
+        console.log("createProduct() " + e);
+        let n = new IDcard();
+
+        //n.use();
+        n.IDcard(e);
+        //console.log("n: ");
+        //console.log(n);//親クラスで登録される?
+    };
+    public registerProduct(e: string) {
+        owners.push(e);
+        console.log("this.owners: " + owners);
+        // this.getOwners();
+    };
+
+    public getOwners() {
+        return owners;
+    }
+
+
+}
+
+class MainFactory4 {
+    main(e: string) {
+        let idfc = new IDfactory();
+        idfc.createProduct(e);
+        idfc.registerProduct(e);
+        //idfc.use();
+        //console.log(idfc.getOwners());
+    }
+}
+
+// 確認
+let m4 = new MainFactory4();
+m4.main("山田太郎");
+m4.main("鈴木花子");
+console.log("");
