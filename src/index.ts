@@ -383,6 +383,37 @@ m4.main("山田太郎");
 m4.main("鈴木花子");
 console.log("");
 
+console.log("\n■5■ Singletonパターン、インスタンスが1つしかないことを保証");
+
+class Singleton {
+    private Singleton() {
+        // privateにする事でクラス外からのコンストラクタ呼び出しを禁止
+    }
+    // Singleton
+    private static _instance: Singleton;
+    public static getInstance() {
+        let temp: string = "既存";
+        if (!this._instance) {
+            this._instance = new Singleton(Singleton.getInstance);
+            temp = "新規";
+        }
+        console.log(temp + "インスタンスを返す");
+        return this._instance;
+    }
+    private constructor(caller: Function) {
+        if (caller === Singleton.getInstance) {
+            console.log("Singletonインスタンス新規作成");
+        } else if (Singleton._instance) {
+            throw new Error("Singletonが既にインスタンスが存在するためエラー。");
+        } else {
+            throw new Error("Singletonコンストラクタの引数が不正な為エラー。");
+        }
+    }
+}
+
+let a = Singleton.getInstance();// 新規インスタンスを返す
+let b = Singleton.getInstance();// 既存インスタンスを返す
+let c = Singleton.getInstance();// 既存インスタンスを返す
 
 console.log("\n■ 19 ■ Stateパターン、状態によって遷移、ゲームでもよく使われる");
 
