@@ -6,6 +6,7 @@ end
 02 Adapter  
 03 Template  
 04 Factory Method  
+05 Singleton  
 19 State  
 
 reference  
