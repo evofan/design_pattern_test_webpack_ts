@@ -3,10 +3,12 @@
 **DEMO**  
 [https://evofan.github.io/design_pattern_test_webpack_ts/dist/index.html](https://evofan.github.io/design_pattern_test_webpack_ts/dist/index.html)  
 end  
+01 Iterator △
 02 Adapter  
 03 Template  
 04 Factory Method  
 05 Singleton  
+06 Prototype △
 19 State  
 
 reference  
