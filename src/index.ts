@@ -411,11 +411,118 @@ class Singleton {
     }
 }
 
-let a = Singleton.getInstance();// 新規インスタンスを返す
-let b = Singleton.getInstance();// 既存インスタンスを返す
-let c = Singleton.getInstance();// 既存インスタンスを返す
+let aaaa = Singleton.getInstance();// 新規インスタンスを返す
+let bbbb = Singleton.getInstance();// 既存インスタンスを返す
+let cccc = Singleton.getInstance();// 既存インスタンスを返す
+
+
+
+console.log("\n■ 6 ■ Prototypeパターン、インスタンスがをクラスから生成するのでなく、別のインスタンスのコピーから作る");
+// 元記事がJavaでcloneableを継承する形で実装してるので、
+// ネット上で別の記事を参照
+// 
+// JavaScript のオブジェクトのクローンは Object.create で十分なことが多い気がする
+// http://var.blog.jp/archives/78945827.html
+// 
+
+/*
+const copy = obj => {
+    if (obj && typeof obj === "object") {
+        if (Array.isArray(obj)) {
+            return obj.map(copy);
+        } else {
+            return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, copy(v)]));
+        }
+    } else {
+        return obj
+    }
+}
+*/
+
+// const copy2 = obj => JSON.parse(JSON.stringify(obj))
+
+class X {
+    private value;
+    constructor() {
+        this.value = 10;
+    }
+    get() {
+        return this.value;
+    }
+    set(v: number) {
+        this.value = v;
+    }
+}
+
+const x: { [b: string]: any } = new X();
+x.set(100)
+console.log(x); // e {value: 100}
+
+let x2: { X: any, [a: string]: any } = Object.create(x);
+console.log(x2); // e {} 見えない
+
+console.log(x2.get()); // 100 けど参照は出来る
+// console.log(x2.value); // err privateなので参照不可能
+
+x2.set(200);
+console.log(x2.get()); // 200
+
+x2.a = "a";
+console.log(x2.a);
+
+console.log(x.get());// 100
+/*
+console.log(x.value); // err
+console.log(x.a); //err
+*/
+
+console.log(x instanceof X);// true
+console.log(x2 instanceof X);// true
+
+// クローン元の影響を受ける
+x.b = "b";
+console.log(x2.b);//b
+
+//x2.a = "2";
+//console.log(x.a);
+
+//クローンをする型に clone 機能を用意して プロパティも clone を再帰的にするものを作ってみました
+/*
+class Clonable {
+	clone() {
+		const clone = Object.create(this)
+		for (const prop of this.constructor.clone_properties) {
+			clone[prop] = this[prop].clone()
+		}
+		return clone
+	}
+
+	static get clone_properties() {
+		return []
+	}
+}
+class X extends Clonable {
+	constructor(){
+		super()
+		this.str = "aa"
+	}
+}
+class Y extends Clonable {
+	constructor(){
+		super()
+		this.x = new X()
+		this.x2 = new X()
+	}
+
+	static get clone_properties(){
+		return ["x"]
+	}
+}
+*/
+
 
 console.log("\n■ 19 ■ Stateパターン、状態によって遷移、ゲームでもよく使われる");
+
 
 // サンプルでは1つの状態を1つのクラスで表現するようになっている、インターフェースで必要なメソッドを保証
 
