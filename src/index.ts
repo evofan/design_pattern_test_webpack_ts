@@ -489,37 +489,149 @@ console.log(x2.b);//b
 //クローンをする型に clone 機能を用意して プロパティも clone を再帰的にするものを作ってみました
 /*
 class Clonable {
-	clone() {
-		const clone = Object.create(this)
-		for (const prop of this.constructor.clone_properties) {
-			clone[prop] = this[prop].clone()
-		}
-		return clone
-	}
+    clone() {
+        const clone = Object.create(this)
+        for (const prop of this.constructor.clone_properties) {
+            clone[prop] = this[prop].clone()
+        }
+        return clone
+    }
 
-	static get clone_properties() {
-		return []
-	}
+    static get clone_properties() {
+        return []
+    }
 }
 class X extends Clonable {
-	constructor(){
-		super()
-		this.str = "aa"
-	}
+    constructor(){
+        super()
+        this.str = "aa"
+    }
 }
 class Y extends Clonable {
-	constructor(){
-		super()
-		this.x = new X()
-		this.x2 = new X()
-	}
+    constructor(){
+        super()
+        this.x = new X()
+        this.x2 = new X()
+    }
 
-	static get clone_properties(){
-		return ["x"]
-	}
+    static get clone_properties(){
+        return ["x"]
+    }
 }
 */
 
+
+console.log("\n■ 7 ■ Builderパターン、インスタンスを少しずつ積み重ねて構造を組み上げていく");
+
+/*
+ * 文書を作る抽象クラス
+ */
+class Builder {
+    public makeTitle(title: string): void { };
+    public makeSummary(summary: string): void { };
+    public makeItems(items: string[]): void { };
+    public getResult(): void { };
+}
+
+/*
+ * 実際に文書を作る具象クラス
+ */
+class Diretor /*xtends Builder*/ {
+    public builder: any;
+    public Director(builder: any) {
+        console.log("Diretor() " + builder);
+        this.builder = builder;
+    }
+    constructor() {
+        // super();
+        console.log("Diretor constructor() " + this.builder);
+        this.builder.makeTitle("Greeting");
+        this.builder.makeSummary("朝から昼にかけて");
+        this.builder.makeItems(new String(["おはよう", "こんにちは"]));
+        this.builder.makeSummary("夜に");
+        this.builder.makeItems(new String(["こんばんは", "おやすみなさい", "さようなら"]));
+        return this.builder.getResult();
+    }
+
+}
+
+// Builderのサブクラス、文書を構築する、Stringを返す
+class TextBuilder extends Builder {
+    private buffer: any = new String();
+    public makeTitle(title: string) {
+        this.buffer.append("====================\n");
+        this.buffer.append("【" + title + "】\n");
+        this.buffer.append("\n");
+    }
+    public makeSummary(summary: string) {
+        this.buffer.append("■" + summary + "\n");
+        this.buffer.append("\n");
+    }
+    public makeItems(items: string[]) {
+        for (let i: number = 0; i < items.length; i++) {
+            this.buffer.append(" ・" + items[i] + "\n");
+        }
+        this.buffer.append("\n");
+    }
+    public getResult() {
+        this.buffer.append("====================\n");
+        return this.buffer.toString();
+    }
+}
+
+// HTMLBuilderクラス、HTMLを構築する
+class HTMLBuilder extends Builder {
+    private fileName: any;
+    private writer: any;
+    public HTMLBuilder() {
+        console.log("HTMLBuilder()");
+        //
+    }
+    public makeTitle(title: string) {
+        this.fileName = title + ".html";
+        // 仮
+        console.log(this.fileName + "を出力");
+    }
+    public makeSummary(summary: string) {
+        // 仮
+        console.log(summary + "を構築");
+    }
+    public makeItems(items: string[]) {
+        console.log(items);
+        console.log("を構築");
+    }
+    public getResult() {
+        return this.fileName;
+    }
+}
+
+class BuilderTestMain {
+    public BuilderTestMain(e: string[]) {
+        console.log(e);
+        if (e.length !== 1) {
+            console.log("arg error1");
+        } else if (e[0] === "plain") {
+            console.log("plain");
+            let diretor: any = new Diretor();
+            // let result = diretor.constructor(new TextBuilder());
+            diretor.Director(new TextBuilder());
+            // console.log(result);
+        } else if (e[0] === "html") {
+            console.log("html");
+            let diretor: any = new Diretor();
+            console.log("diretor: " + diretor);
+            let filename = diretor.constructor(new HTMLBuilder());
+            console.log(filename);
+        } else {
+            console.log("arg error2");
+        }
+    }
+}
+
+/*
+let testBuilder = new BuilderTestMain();
+testBuilder.BuilderTestMain(["html"]);
+*/
 
 console.log("\n■ 19 ■ Stateパターン、状態によって遷移、ゲームでもよく使われる");
 
