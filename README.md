@@ -10,6 +10,7 @@
 04 Factory Method  
 05 Singleton  
 06 Prototype △サンプルをTSに変換出来ない  
+07 Builder △サンプルをTSに変換出来ない  
 19 State  
 
 reference  
