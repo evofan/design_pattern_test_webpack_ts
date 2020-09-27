@@ -11,6 +11,7 @@
 05 Singleton  
 06 Prototype △サンプルをTSに変換出来ない  
 07 Builder △サンプルをTSに変換出来ない  
+09 Bridge △ ※以降TSでデザインパターン解説してるサイトでテストするに変更
 19 State  
 
 reference  
@@ -25,4 +26,4 @@ JSでclone()を実装
 
 **追加のプロパティを許可する Freshness - TypeScript Deep Dive 日本語版**  
 [https://typescript-jp.gitbook.io/deep-dive/type-system/freshness](https://typescript-jp.gitbook.io/deep-dive/type-system/freshness)  
-JSにように let obj = {}; obj.a = "あ";はエラーになるので  
+JSにように let obj = {}; obj.a = "a";はエラーになるので  
