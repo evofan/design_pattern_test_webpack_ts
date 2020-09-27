@@ -633,6 +633,100 @@ let testBuilder = new BuilderTestMain();
 testBuilder.BuilderTestMain(["html"]);
 */
 
+console.log("\n■ 9 ■ Bridgeパターン、機能の階層と、実装の階層を分ける（それを橋渡しするのでブリッジ）");
+
+//機能のクラス階層、最上位
+class Display {
+    private imple: any;
+    public Display(e: any) {
+        console.log("Display()"); // Display()
+        //console.log(e); // t {str: "", width: 0}
+        this.imple = e;
+    }
+    public open() {
+        this.imple.rawOpen();
+    }
+    public print() {
+        this.imple.rawPrint();
+    }
+    public close() {
+        this.imple.rawClose();
+    }
+    public display() {
+        open();
+        print();
+        close();
+    }
+}
+
+//機能クラス階層、機能を追加
+class CountDisplay extends Display {
+    constructor() {
+        super();
+    }
+    public CountDisplay(e: any) {
+        //
+    }
+    public multiDisplay(time: number) {
+        open();
+        for (let i: number = 0; i < time; i++) {
+            print();
+        }
+        close();
+    }
+}
+
+// 実装クラスの階層、最上位
+class DisplayImple {
+    public rawopen(): void { };
+    public rawPrint(): void { };
+    public rawClose(): void { };
+}
+// 実装クラスの階層
+class StringDisplayImple extends DisplayImple {
+    private str: string = "";
+    private width: number = 0;
+    public StringDisplayImple(e: string) {
+        this.str = e;
+        this.width = e.length;
+        // console.log(this.str);//ああああ
+        // console.log(this.width);//4
+    }
+    public open() {
+        this.printLine2();
+    }
+    public print() {
+        console.log("|" + this.str + "|");
+    }
+    public close() {
+        this.printLine2();
+    }
+    private printLine2() {
+        console.log("+");
+        for (let i: number = 0; i < this.width; i++) {
+            console.log("-");
+        }
+        console.log("+");
+    }
+}
+
+//let d1 = new Display();
+let d2 = new StringDisplayImple();
+d2.StringDisplayImple("ああああ");
+d2.open();// +----+
+d2.print();// |ああああ|
+d2.close();// +----+
+//let d3 = d2.StringDisplay2();
+//d2.open();
+//console.log(d3);// e {imple: t} // {str: "", width: 0}
+let d3 = new CountDisplay();
+d3.CountDisplay(d2);
+d3.open();// +----+
+d3.print();// |ああああ|
+d3.close();// +----+
+
+//console.log(d1b);// undefined
+
 console.log("\n■ 19 ■ Stateパターン、状態によって遷移、ゲームでもよく使われる");
 
 
