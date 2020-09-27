@@ -11,7 +11,7 @@
 05 Singleton  
 06 Prototype △サンプルをTSに変換出来ない  
 07 Builder △サンプルをTSに変換出来ない  
-09 Bridge △ ※以降TSでデザインパターン解説してるサイトでテストするに変更
+09 Bridge △ ※以降TSでデザインパターン解説してるサイトでテストするに変更  
 19 State  
 
 reference  
