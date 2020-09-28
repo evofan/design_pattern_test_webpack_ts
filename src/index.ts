@@ -710,12 +710,15 @@ class StringDisplayImple extends DisplayImple {
     }
 }
 
+
 //let d1 = new Display();
 let d2 = new StringDisplayImple();
 d2.StringDisplayImple("ああああ");
 d2.open();// +----+
 d2.print();// |ああああ|
 d2.close();// +----+
+
+/*
 //let d3 = d2.StringDisplay2();
 //d2.open();
 //console.log(d3);// e {imple: t} // {str: "", width: 0}
@@ -726,6 +729,8 @@ d3.print();// |ああああ|
 d3.close();// +----+
 
 //console.log(d1b);// undefined
+
+*/
 
 console.log("\n■ 19 ■ Stateパターン、状態によって遷移、ゲームでもよく使われる");
 
